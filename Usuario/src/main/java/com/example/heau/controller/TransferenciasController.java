@@ -9,18 +9,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("heau/v1/transferencias")
-public class TrasnferenciasController {
+public class TransferenciasController {
 
     private final ClienteService clienteService;
     private final TransferenciasService transferenciasService;
 
     @Autowired
-    public TrasnferenciasController(ClienteService clienteService, TransferenciasService transferenciasService, TransferenciasService transferenciasService1) {
+    public TransferenciasController(ClienteService clienteService, TransferenciasService transferenciasService, TransferenciasService transferenciasService1) {
         this.clienteService = clienteService;
         this.transferenciasService = transferenciasService;
     }
@@ -33,9 +38,14 @@ public class TrasnferenciasController {
     @RequestMapping(method = RequestMethod.POST, value = "/realizarTransferencia")
     @ResponseBody
     public ResponseEntity<Transferencia> realizarTransferencia(@RequestBody TransferenciaDTO transferenciaDTO) {
+        return ResponseEntity.ok(transferenciasService.realizaTransferencia(transferenciaDTO));
 
-        ResponseEntity<Transferencia> e = ResponseEntity.ok(transferenciasService.realizaTransferencia(transferenciaDTO));
-        return e;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/listarTransferencias")
+    @ResponseBody
+    public ResponseEntity<List<TransferenciaDTO>> listaTransferencias(@RequestParam Long numeroConta) {
+        return ResponseEntity.ok(transferenciasService.listaTransferenciasPorConta(numeroConta));
 
     }
 

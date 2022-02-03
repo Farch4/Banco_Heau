@@ -38,13 +38,6 @@ public class Conta {
     @JsonProperty("Saldo da Conta")
     private Double saldo;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Transferencia> transferencias= new ArrayList<>();
-
-    public void addTransferencias(Transferencia transferencias) {
-        this.transferencias.add(transferencias);
-    }
-
     public Conta(Double saldo) {
         this.saldo= saldo;
     }
