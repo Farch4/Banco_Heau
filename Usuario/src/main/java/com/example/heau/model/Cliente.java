@@ -1,6 +1,9 @@
 package com.example.heau.model;
 
 import com.example.heau.model.dto.ClienteDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,7 +19,7 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "clientes")
+@Table(name = "CLIENTE")
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
@@ -30,9 +33,11 @@ public class Cliente {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
+    @JsonIgnore
     private Long id;
 
     @Column(nullable = false)
+    @JsonProperty("Nome do Cliente")
     private String nome;
 
     @OneToOne(cascade = CascadeType.PERSIST)

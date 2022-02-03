@@ -6,10 +6,12 @@ import com.example.heau.model.dto.ClienteDTO;
 import com.example.heau.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class ClienteService {
 
     private final IRepositorioClientes repositorio;
@@ -36,6 +38,6 @@ public class ClienteService {
     }
 
     public Optional<Cliente> buscaPelaConta(Long numeroConta) {
-        return repositorio.findByConta(new Conta(numeroConta, null));
+        return repositorio.findByConta(new Conta(numeroConta));
     }
 }
