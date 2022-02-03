@@ -1,21 +1,30 @@
-package com.example.usuarioms.model;
+package com.example.heau.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.heau.model.dto.ClienteDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
 @Entity
 @Table(name = "clientes")
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
+
+    public Cliente(ClienteDTO clienteDTO){
+        this.nome= clienteDTO.getNome();
+        this.conta= new Conta(clienteDTO.getSaldo());
+    }
 
     @Id
     @EqualsAndHashCode.Include
@@ -24,16 +33,8 @@ public class Cliente {
     private Long id;
 
     @Column(nullable = false)
-    @JsonProperty("Nome do Cliente")
     private String nome;
 
-    @EqualsAndHashCode.Include
-    @JsonProperty("Número da Conta")
-    @Column(unique = true, nullable = false)
-    private Long numero;
-
-    @JsonProperty("Saldo da Conta")
-    @Column
-    private Double saldo;
-
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Conta conta;
 }

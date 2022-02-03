@@ -1,8 +1,11 @@
-package com.example.usuarioms.controller;
+package com.example.heau.controller;
 
-import com.example.usuarioms.model.Cliente;
-import com.example.usuarioms.service.ClienteService;
+import com.example.heau.model.Cliente;
+import com.example.heau.model.Conta;
+import com.example.heau.model.dto.ClienteDTO;
+import com.example.heau.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +34,8 @@ public class ClienteController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/cadastro")
     @ResponseBody
-    public String cadastraCliente(@RequestBody Cliente cliente) {
-        return clienteService.cadastroCliente(cliente);
+    public ResponseEntity<String> cadastraCliente(@RequestBody ClienteDTO cliente) {
+        return ResponseEntity.ok(clienteService.cadastroCliente(cliente));
     }
 
     /**
@@ -40,8 +43,8 @@ public class ClienteController {
      * @return lista com todos os clientes
      */
     @RequestMapping(method = RequestMethod.GET, value = "/lista")
-    public List<Cliente> listaClientes(){
-        return clienteService.ListaClientes();
+    public ResponseEntity<List<Cliente>> listaClientes(){
+        return ResponseEntity.ok(clienteService.ListaClientes());
     }
 
     /**
