@@ -1,10 +1,10 @@
-package com.br.heau;
+package com.br.heau.teste.unitario;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UsuarioMsApplicationTests {
+class HeauMsApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,4 +1,4 @@
-package com.br.heau.servicos;
+package com.br.heau.teste.unitario.servicos;
 
 import com.br.heau.data.IRepositorioClientes;
 import com.br.heau.service.ClienteService;
@@ -23,7 +23,7 @@ public class ClienteServiceTests {
 
     @Test
     public void TesteDeveriaSucessoCadastroUsuario(){
-
+        Assertions.assertNotEquals(1,2);
     }
 
     @Test
