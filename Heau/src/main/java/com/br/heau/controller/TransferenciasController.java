@@ -19,12 +19,10 @@ import java.util.List;
 @RequestMapping("heau/v1/transferencias")
 public class TransferenciasController {
 
-    private final ClienteService clienteService;
     private final TransferenciasService transferenciasService;
 
     @Autowired
-    public TransferenciasController(ClienteService clienteService, TransferenciasService transferenciasService, TransferenciasService transferenciasService1) {
-        this.clienteService = clienteService;
+    public TransferenciasController(TransferenciasService transferenciasService, TransferenciasService transferenciasService1) {
         this.transferenciasService = transferenciasService;
     }
 

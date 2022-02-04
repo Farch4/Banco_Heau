@@ -18,11 +18,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import static com.br.heau.testes.utils.EntityFactory.*;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willReturn;
 
 @SpringBootTest
 public class ClienteServiceMetodosTests {
@@ -41,21 +44,15 @@ public class ClienteServiceMetodosTests {
     public void testeDeveriaSucessoCadastroCliente(){
         String nome = "Bruno";
         Long conta = 1L;
-        given(repositorioClientes.save(new Cliente(new ClienteDTO(nome, 5000.0, conta)))).willReturn(new Cliente(new ClienteDTO(nome, 5000.0, conta)));
+        given(repositorioClientes.save(geraCliente(1L))).willReturn(geraCliente(1L));
         assertEquals(nome+Constantes.USUARIO_CADASTRO_SUCESSO+conta, clienteService.cadastroCliente(new ClienteDTO(nome, 5000.0, conta)));
     }
 
     @Test
-    public void testeDeveFalharGenericamenteCadastroCliente(){
-        given(repositorioClientes.save(null)).willReturn(Constantes.USUARIO_CADASTRO_FALHA_GENERICA);
-        assertEquals(Constantes.USUARIO_CADASTRO_FALHA_GENERICA, clienteService.cadastroCliente(null));
-    }
-    
-    @Test
     public void testeDeveTerSucessoAoListarClientes(){
         List<Cliente> listaMock = new ArrayList<>();
-        listaMock.add(new Cliente((new ClienteDTO("Bruno", 5000.0, 1L))));
-        listaMock.add(new Cliente((new ClienteDTO("Sergio", 8000.0, 2L))));
+        listaMock.add(geraCliente(1L));
+        listaMock.add(geraCliente(2L));
         given(repositorioClientes.findAll()).willReturn(listaMock);
         List<Cliente>listaRetorno = clienteService.ListaClientes();
         assertLinesMatch(listaRetorno.stream().map(cliente->cliente.getConta().getId().toString()).collect(Collectors.toList()),
@@ -70,8 +67,7 @@ public class ClienteServiceMetodosTests {
 
     @Test
     public void testeDeveTerSucessoEmPesquisarUsuarioPelaConta(){
-        Optional<Cliente> clienteResposta = Optional.of(new Cliente());
-        clienteResposta.get().setConta(new Conta(1L));
+        Optional<Cliente> clienteResposta = Optional.of(geraCliente(1L));
         given(repositorioClientes.findByContaId(1L)).willReturn(clienteResposta);
         assertEquals(clienteService.buscaPelaConta(1L).get().getConta().getId(), 1L);
     }

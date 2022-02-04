@@ -4,6 +4,7 @@ import com.br.heau.data.IRepositorioClientes;
 import com.br.heau.data.IRepositorioConta;
 import com.br.heau.data.IRepositorioTransferencias;
 import com.br.heau.model.Cliente;
+import com.br.heau.model.Conta;
 import com.br.heau.model.Transferencia;
 import com.br.heau.model.dto.ClienteDTO;
 import com.br.heau.model.dto.TransferenciaDTO;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.br.heau.testes.utils.EntityFactory.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,10 +49,10 @@ public class TransferenciaMetodosServiceTests {
     @Test
     public void testeDeveriaSucessoAoRealizarTransferencia(){
 
-        Cliente clienteOrigem= new Cliente((new ClienteDTO("Sergio", 8000.0, 2L)));
-        Cliente clienteDestino = new Cliente((new ClienteDTO("Bruno", 5000.0, 1L)));
-        Transferencia transferencia = new Transferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
-                500.0, ResultadoTransferenciaEnum.SUCESSO.getResultado());
+        Cliente clienteOrigem= geraCliente(2L);
+        Cliente clienteDestino = geraCliente(1L);
+        Transferencia transferencia = geraTransferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
+                ResultadoTransferenciaEnum.SUCESSO.getResultado());
 
         given(repositorioClientes.findByContaId(2L)).willReturn(Optional.of(clienteOrigem));
         given(repositorioClientes.findByContaId(1L)).willReturn(Optional.of(clienteDestino));
@@ -63,10 +65,10 @@ public class TransferenciaMetodosServiceTests {
     @Test
     public void testeDeveriaDarErroDeValorMaiorQueMilAoRealizarTransferencia(){
 
-        Cliente clienteOrigem= new Cliente((new ClienteDTO("Sergio", 8000.0, 2L)));
-        Cliente clienteDestino = new Cliente((new ClienteDTO("Bruno", 5000.0, 1L)));
-        Transferencia transferencia = new Transferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
-                1500.0, ResultadoTransferenciaEnum.VALOR_MAIOR.getResultado());
+        Cliente clienteOrigem= geraCliente(2L);
+        Cliente clienteDestino = geraCliente(1L);
+        Transferencia transferencia = geraTransferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
+                ResultadoTransferenciaEnum.VALOR_MAIOR.getResultado(), 1500.0);
 
         given(repositorioClientes.findByContaId(2L)).willReturn(Optional.of(clienteOrigem));
         given(repositorioClientes.findByContaId(1L)).willReturn(Optional.of(clienteDestino));
@@ -79,13 +81,12 @@ public class TransferenciaMetodosServiceTests {
     @Test
     public void testeDeveriaSucessoAoListarTransferenciasPorConta(){
 
-        Cliente clienteOrigem= new Cliente((new ClienteDTO("Sergio", 8000.0, 2L)));
-        Cliente clienteDestino = new Cliente((new ClienteDTO("Bruno", 5000.0, 1L)));
-        Transferencia transferencia1 = new Transferencia(1L, 0, clienteOrigem.getConta(), clienteDestino.getConta(),
-                150.0, ResultadoTransferenciaEnum.SUCESSO.getResultado(), new Date(System.currentTimeMillis()));
+        Conta contaOrigem= geraConta(2L);
+        Conta contaDestino = geraConta(1L);
 
-        Transferencia transferencia2 = new Transferencia(2L, 0, clienteOrigem.getConta(), clienteDestino.getConta(),
-                150.0, ResultadoTransferenciaEnum.SUCESSO.getResultado(), new Date(System.currentTimeMillis()));
+        Transferencia transferencia1 = geraTransferencia(1L, contaOrigem, contaDestino, ResultadoTransferenciaEnum.SUCESSO.getResultado());
+
+        Transferencia transferencia2 = geraTransferencia(2L, contaOrigem, contaDestino, ResultadoTransferenciaEnum.SUCESSO.getResultado());
         List<Transferencia> transferencias = new ArrayList<>();
 
         transferencias.add(transferencia1);
@@ -95,8 +96,8 @@ public class TransferenciaMetodosServiceTests {
 
         assertLinesMatch(transferencias.stream().map(t->t.getId().toString()).collect(Collectors.toList()),
                 transferenciasService.listaTransferenciasPorConta(2L).stream().map(t->t.getId().toString()).collect(Collectors.toList()));
-        assertLinesMatch(transferencias.stream().map(t->t.getResultado()).collect(Collectors.toList()),
-                transferenciasService.listaTransferenciasPorConta(2L).stream().map(t->t.getResultado()).collect(Collectors.toList()));
+        assertLinesMatch(transferencias.stream().map(Transferencia::getResultado).collect(Collectors.toList()),
+                transferenciasService.listaTransferenciasPorConta(2L).stream().map(TransferenciaDTO::getResultado).collect(Collectors.toList()));
 
 
     }

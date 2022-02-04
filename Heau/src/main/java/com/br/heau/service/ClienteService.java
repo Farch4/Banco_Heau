@@ -1,4 +1,5 @@
 package com.br.heau.service;
+
 import com.br.heau.data.IRepositorioClientes;
 import com.br.heau.model.Cliente;
 import com.br.heau.model.dto.ClienteDTO;
@@ -16,24 +17,22 @@ public class ClienteService {
     private final IRepositorioClientes repositorio;
 
     @Autowired
-    public ClienteService(IRepositorioClientes repositorioClientes){
+    public ClienteService(IRepositorioClientes repositorioClientes) {
         repositorio = repositorioClientes;
     }
 
 
-    public String cadastroCliente(ClienteDTO clienteDTO){
-        ClienteValidator validador= new ClienteValidator(clienteDTO);
-        if(validador.validate()!=null){
+    public String cadastroCliente(ClienteDTO clienteDTO) {
+
+        ClienteValidator validador = new ClienteValidator(clienteDTO);
+        if (validador.validate() != null) {
             return validador.validate();
         }
-        try {
-            Cliente cliente = new Cliente(clienteDTO);
-            repositorio.save(cliente);
-            return cliente.getNome().concat(Constantes.USUARIO_CADASTRO_SUCESSO)
-                    .concat(cliente.getConta().getId().toString());
-        }catch (Exception e){
-            return Constantes.USUARIO_CADASTRO_FALHA_GENERICA;
-        }
+
+        Cliente cliente = new Cliente(clienteDTO);
+        repositorio.save(cliente);
+        return cliente.getNome().concat(Constantes.USUARIO_CADASTRO_SUCESSO)
+                .concat(cliente.getConta().getId().toString());
     }
 
     public List<Cliente> ListaClientes() {

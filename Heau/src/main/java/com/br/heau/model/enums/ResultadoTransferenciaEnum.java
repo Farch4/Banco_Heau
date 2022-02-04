@@ -11,7 +11,7 @@ public enum ResultadoTransferenciaEnum{
     CONTAS_INEXISTENTES("Nenhuma das duas contas informadas foi encontrada"),
     VALOR_INVALIDO("Valor inválido de transferência");
 
-    private String resultado;
+    private final String resultado;
 
     ResultadoTransferenciaEnum(String resultado) {
         this.resultado= resultado;
