@@ -1,4 +1,4 @@
-package com.example.heau.model.enums;
+package com.br.heau.model.enums;
 
 
 public enum ResultadoTransferenciaEnum{

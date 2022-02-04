@@ -1,6 +1,6 @@
-package com.example.heau.data;
+package com.br.heau.data;
 
-import com.example.heau.model.Cliente;
+import com.br.heau.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

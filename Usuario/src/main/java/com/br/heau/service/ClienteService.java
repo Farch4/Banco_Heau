@@ -1,11 +1,9 @@
-package com.example.heau.service;
-import com.example.heau.data.IRepositorioClientes;
-import com.example.heau.model.Cliente;
-import com.example.heau.model.Conta;
-import com.example.heau.model.dto.ClienteDTO;
-import com.example.heau.util.Constantes;
+package com.br.heau.service;
+import com.br.heau.data.IRepositorioClientes;
+import com.br.heau.model.Cliente;
+import com.br.heau.model.dto.ClienteDTO;
+import com.br.heau.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

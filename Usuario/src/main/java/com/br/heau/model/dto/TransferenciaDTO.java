@@ -1,6 +1,6 @@
-package com.example.heau.model.dto;
+package com.br.heau.model.dto;
 
-import com.example.heau.model.Transferencia;
+import com.br.heau.model.Transferencia;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

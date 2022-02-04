@@ -1,5 +1,5 @@
-package com.example.heau.data;
-import com.example.heau.model.Transferencia;
+package com.br.heau.data;
+import com.br.heau.model.Transferencia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,12 +1,12 @@
-package com.example.heau.util.validator;
+package com.br.heau.util.validator;
 
-import com.example.heau.data.IRepositorioClientes;
-import com.example.heau.data.IRepositorioTransferencias;
-import com.example.heau.model.Cliente;
-import com.example.heau.model.Conta;
-import com.example.heau.model.Transferencia;
-import com.example.heau.model.dto.TransferenciaDTO;
-import com.example.heau.model.enums.ResultadoTransferenciaEnum;
+import com.br.heau.data.IRepositorioTransferencias;
+import com.br.heau.model.Cliente;
+import com.br.heau.model.Conta;
+import com.br.heau.model.dto.TransferenciaDTO;
+import com.br.heau.model.enums.ResultadoTransferenciaEnum;
+import com.br.heau.data.IRepositorioClientes;
+import com.br.heau.model.Transferencia;
 
 import java.util.Optional;
 

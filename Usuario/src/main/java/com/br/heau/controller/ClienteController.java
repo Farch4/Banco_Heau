@@ -1,8 +1,8 @@
-package com.example.heau.controller;
+package com.br.heau.controller;
 
-import com.example.heau.model.Cliente;
-import com.example.heau.model.dto.ClienteDTO;
-import com.example.heau.service.ClienteService;
+import com.br.heau.model.Cliente;
+import com.br.heau.service.ClienteService;
+import com.br.heau.model.dto.ClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;

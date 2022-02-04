@@ -1,8 +1,8 @@
-package com.example.heau.servicos;
+package com.br.heau.servicos;
 
-import com.example.heau.data.IRepositorioClientes;
-import com.example.heau.service.ClienteService;
-import com.example.heau.util.Constantes;
+import com.br.heau.data.IRepositorioClientes;
+import com.br.heau.service.ClienteService;
+import com.br.heau.util.Constantes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

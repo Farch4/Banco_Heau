@@ -1,4 +1,4 @@
-package com.example.heau.model.dto;
+package com.br.heau.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
