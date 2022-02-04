@@ -3,7 +3,6 @@ package com.example.heau.service;
 import com.example.heau.data.IRepositorioClientes;
 import com.example.heau.data.IRepositorioConta;
 import com.example.heau.data.IRepositorioTransferencias;
-import com.example.heau.model.Cliente;
 import com.example.heau.model.Conta;
 import com.example.heau.model.Transferencia;
 import com.example.heau.model.dto.TransferenciaDTO;
@@ -13,11 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TransferenciasService {
@@ -63,8 +59,7 @@ public class TransferenciasService {
         List<Transferencia> transferencias= new ArrayList<>();
         transferencias.addAll(repositorioTransferencias.findByContaOrigemId(numeroConta));
         transferencias.addAll(repositorioTransferencias.findByContaDestinoId(numeroConta));
-        Comparator<Transferencia> comparator= Comparator.comparing(Transferencia::getDataDaTransferencia);
-        transferencias.sort(comparator.reversed());
+        transferencias.sort(Comparator.comparing(Transferencia::getDataDaTransferencia).reversed());
         List<TransferenciaDTO> transferenciasDTO = new ArrayList<>();
         for(Transferencia transferencia: transferencias){
             transferenciasDTO.add(new TransferenciaDTO(transferencia));

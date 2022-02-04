@@ -14,8 +14,8 @@ import java.util.Date;
 public class TransferenciaDTO {
 
     public TransferenciaDTO(Transferencia transferencia){
-        this.numeroContaOrigem= transferencia.getContaOrigem().getId();
-        this.numeroContaDestino= transferencia.getContaDestino().getId();
+        this.numeroContaOrigem= transferencia.getContaOrigem()!=null?transferencia.getContaOrigem().getId():null;
+        this.numeroContaDestino= transferencia.getContaDestino()!=null?transferencia.getContaDestino().getId():null;
         this.valorTransferencia= transferencia.getValorTransferencia();
         this.dataTransferencia= transferencia.getDataDaTransferencia();
         this.resultado= transferencia.getResultado();
