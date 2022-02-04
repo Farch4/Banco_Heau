@@ -1,7 +1,6 @@
 package com.example.heau.controller;
 
 import com.example.heau.model.Cliente;
-import com.example.heau.model.Conta;
 import com.example.heau.model.dto.ClienteDTO;
 import com.example.heau.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;

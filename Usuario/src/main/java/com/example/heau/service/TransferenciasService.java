@@ -43,10 +43,10 @@ public class TransferenciasService {
             return validador.validate();
         }
 
-        Conta contaDestino = repositorioCliente.findByConta(
-                new Conta(transferenciaDTO.getNumeroContaDestino())).get().getConta();
-        Conta contaOrigem = repositorioCliente.findByConta(
-                new Conta(transferenciaDTO.getNumeroContaOrigem())).get().getConta();
+        Conta contaDestino = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaDestino())
+                .get().getConta();
+        Conta contaOrigem = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaOrigem())
+                .get().getConta();
 
         contaOrigem.setSaldo(contaOrigem.getSaldo()- transferenciaDTO.getValorTransferencia());
         repositorioConta.save(contaOrigem);
@@ -61,8 +61,8 @@ public class TransferenciasService {
 
     public  List<TransferenciaDTO> listaTransferenciasPorConta(Long numeroConta){
         List<Transferencia> transferencias= new ArrayList<>();
-        transferencias.addAll(repositorioTransferencias.findByContaOrigem(repositorioConta.getById(numeroConta)));
-        transferencias.addAll(repositorioTransferencias.findByContaDestino(repositorioConta.getById(numeroConta)));
+        transferencias.addAll(repositorioTransferencias.findByContaOrigemId(numeroConta));
+        transferencias.addAll(repositorioTransferencias.findByContaDestinoId(numeroConta));
         Comparator<Transferencia> comparator= Comparator.comparing(Transferencia::getDataDaTransferencia);
         transferencias.sort(comparator.reversed());
         List<TransferenciaDTO> transferenciasDTO = new ArrayList<>();

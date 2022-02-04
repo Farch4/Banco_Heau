@@ -38,6 +38,6 @@ public class ClienteService {
     }
 
     public Optional<Cliente> buscaPelaConta(Long numeroConta) {
-        return repositorio.findByConta(new Conta(numeroConta));
+        return repositorio.findByContaId(numeroConta);
     }
 }

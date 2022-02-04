@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -38,6 +39,10 @@ public class Transferencia {
     @Column(nullable = false)
     @JsonIgnore
     private Long id;
+
+    @Version
+    @JsonIgnore
+    private Integer versao;
 
     @JsonProperty("Número da Conta Origem")
     @OneToOne(cascade = CascadeType.ALL)

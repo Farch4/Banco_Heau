@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Data
 @Entity
@@ -35,6 +36,10 @@ public class Cliente {
     @Column
     @JsonIgnore
     private Long id;
+
+    @Version
+    @JsonIgnore
+    private Integer versao;
 
     @Column(nullable = false)
     @JsonProperty("Nome do Cliente")

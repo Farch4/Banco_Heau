@@ -12,9 +12,9 @@ import java.util.Optional;
 
 public class TransferenciaValidator {
 
-    private IRepositorioTransferencias repositorioTransferencias;
-    private IRepositorioClientes repositorioCliente;
-    TransferenciaDTO transferenciaDTO;
+    private final IRepositorioTransferencias repositorioTransferencias;
+    private final IRepositorioClientes repositorioCliente;
+    private final TransferenciaDTO transferenciaDTO;
 
     public TransferenciaValidator(IRepositorioTransferencias repositorioTransferencias, IRepositorioClientes repositorioCliente, TransferenciaDTO transferenciaDTO) {
         this.repositorioTransferencias = repositorioTransferencias;
@@ -27,10 +27,10 @@ public class TransferenciaValidator {
     }
 
     private Transferencia validaContas(){
-        Optional<Cliente> clienteDestino = repositorioCliente.findByConta(
-                new Conta(transferenciaDTO.getNumeroContaDestino()));
-        Optional<Cliente> clienteOrigem = repositorioCliente.findByConta(
-                new Conta(transferenciaDTO.getNumeroContaOrigem()));
+        Optional<Cliente> clienteDestino = repositorioCliente.findByContaId(
+                transferenciaDTO.getNumeroContaDestino());
+        Optional<Cliente> clienteOrigem = repositorioCliente.findByContaId(
+                transferenciaDTO.getNumeroContaOrigem());
 
         if(!(clienteOrigem.isPresent()) && (clienteDestino.isPresent())){
             return repositorioTransferencias.save(new Transferencia(null,
