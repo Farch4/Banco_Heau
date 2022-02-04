@@ -22,7 +22,6 @@ public class TransferenciasService {
     private final IRepositorioTransferencias repositorioTransferencias;
 
 
-
     @Autowired
     public TransferenciasService(IRepositorioClientes repositorioCliente, IRepositorioConta repositorioConta, IRepositorioTransferencias repositorioTransferencias) {
         this.repositorioCliente = repositorioCliente;
@@ -30,13 +29,12 @@ public class TransferenciasService {
         this.repositorioTransferencias = repositorioTransferencias;
     }
 
-
     public Transferencia realizaTransferencia(TransferenciaDTO transferenciaDTO){
 
-        TransferenciaValidator validador = new TransferenciaValidator(repositorioTransferencias, repositorioCliente, transferenciaDTO);
+        TransferenciaValidator validador = new TransferenciaValidator(repositorioCliente, transferenciaDTO);
 
         if(validador.validate()!=null){
-            return validador.validate();
+            return repositorioTransferencias.save(validador.validate());
         }
 
         Conta contaDestino = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaDestino())

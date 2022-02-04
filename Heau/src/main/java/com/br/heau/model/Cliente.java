@@ -24,9 +24,14 @@ import javax.persistence.Version;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
 
+    /**
+     * Construtor que converte DTO em entidade
+     * @param clienteDTO
+     */
     public Cliente(ClienteDTO clienteDTO){
         this.nome= clienteDTO.getNome();
         this.conta= new Conta(clienteDTO.getSaldo());
+        if(clienteDTO.getNumeroContaOpcional()!=null)this.conta.setId(clienteDTO.getNumeroContaOpcional());
     }
 
     @Id

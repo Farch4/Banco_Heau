@@ -3,6 +3,7 @@ import com.br.heau.data.IRepositorioClientes;
 import com.br.heau.model.Cliente;
 import com.br.heau.model.dto.ClienteDTO;
 import com.br.heau.util.Constantes;
+import com.br.heau.util.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,10 @@ public class ClienteService {
 
 
     public String cadastroCliente(ClienteDTO clienteDTO){
+        ClienteValidator validador= new ClienteValidator(clienteDTO);
+        if(validador.validate()!=null){
+            return validador.validate();
+        }
         try {
             Cliente cliente = new Cliente(clienteDTO);
             repositorio.save(cliente);

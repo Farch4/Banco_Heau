@@ -8,7 +8,8 @@ public enum ResultadoTransferenciaEnum{
     VALOR_MAIOR("Falha: Valor maior do que o permitido"),
     CONTA_ORIGEM_INEXISTENTE("Falha: conta origem inexistente"),
     CONTA_DESTINO_INEXISTENTE("Falha: conta destino inexistente"),
-    CONTAS_INEXISTENTES("Nenhuma das duas contas informadas foi encontrada");
+    CONTAS_INEXISTENTES("Nenhuma das duas contas informadas foi encontrada"),
+    VALOR_INVALIDO("Valor inválido de transferência");
 
     private String resultado;
 

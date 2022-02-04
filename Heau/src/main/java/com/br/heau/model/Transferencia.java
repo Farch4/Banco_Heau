@@ -40,12 +40,12 @@ public class Transferencia {
     @JsonIgnore
     private Integer versao;
 
-    @JsonProperty("Número da Conta Origem")
+    @JsonProperty("Conta Origem")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "conta_origem", referencedColumnName = "id")
     private Conta contaOrigem;
 
-    @JsonProperty("Número da Conta Destino")
+    @JsonProperty("Conta Destino")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "conta_destino", referencedColumnName = "id")
     private Conta contaDestino;
