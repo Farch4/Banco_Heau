@@ -24,7 +24,7 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @Autowired
-    ClienteController(ClienteService clienteService){
+    public ClienteController(ClienteService clienteService){
         this.clienteService=clienteService;
     }
 
@@ -50,7 +50,11 @@ public class ClienteController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/lista")
     public ResponseEntity<List<Cliente>> listaClientes(){
-        return ResponseEntity.ok(clienteService.ListaClientes());
+        List<Cliente> lista = clienteService.ListaClientes();
+        if(lista.size()>0){
+            return ResponseEntity.ok(lista);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     /**
@@ -60,7 +64,11 @@ public class ClienteController {
      */
     @RequestMapping(method = RequestMethod.GET, value= "/buscaPelaConta")
     public ResponseEntity<Optional<Cliente>> buscaPelaConta(@RequestParam Long numeroConta){
-        return ResponseEntity.ok(clienteService.buscaPelaConta(numeroConta));
+        Optional<Cliente> cliente = clienteService.buscaPelaConta(numeroConta);
+        if(cliente.isPresent()){
+            return ResponseEntity.ok(cliente);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Optional.empty());
     }
 
 }

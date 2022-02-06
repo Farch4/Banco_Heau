@@ -9,6 +9,5 @@ public class Constantes {
     public static final String CLIENTE_ORIGEM= "\nCliente Origem: ";
     public static final String CLIENTE_DESTINO= "\nCliente Destino: ";
     public static final String VALOR_TRANSFERIDO= "\nValor Transferido: ";
-
-
+    public static final Object LISTA_DE_CLIENTES_VAZIA = "A lista de clientes se encontra vazia.";
 }

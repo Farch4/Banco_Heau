@@ -15,9 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import static com.br.heau.testes.utils.GeradoraDeEntdades.*;
+import static com.br.heau.testes.utils.GeradoraDeEntidades.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
@@ -70,9 +69,7 @@ public class ClienteServiceMetodosTests {
         listaMock.add(geraCliente(1L));
         listaMock.add(geraCliente(2L));
         given(repositorioClientes.findAll()).willReturn(listaMock);
-        List<Cliente>listaRetorno = clienteService.ListaClientes();
-        assertLinesMatch(listaRetorno.stream().map(cliente->cliente.getConta().getId().toString()).collect(Collectors.toList()),
-                listaMock.stream().map(cliente -> cliente.getConta().getId().toString()).collect(Collectors.toList()));
+        assertEquals(listaMock, clienteService.ListaClientes());
     }
 
     @Test

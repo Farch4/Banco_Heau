@@ -1,7 +1,5 @@
 package com.br.heau.util;
 
-import com.br.heau.model.enums.ResultadoTransferenciaEnum;
-
 public class GeradoraDeMensagens {
 
     public static String mensagemSucessoTransferencia(String...values){

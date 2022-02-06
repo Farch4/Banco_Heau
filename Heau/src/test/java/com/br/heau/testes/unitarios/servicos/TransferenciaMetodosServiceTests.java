@@ -15,7 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static com.br.heau.testes.utils.GeradoraDeEntdades.*;
+import static com.br.heau.testes.utils.GeradoraDeEntidades.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,13 +4,18 @@ import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.Transferencia;
 import com.br.heau.model.dto.ClienteDTO;
+import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 
 import java.util.Date;
 
-public class GeradoraDeEntdades {
+public class GeradoraDeEntidades {
 
     public static Cliente geraCliente(Long codigo){
         return new Cliente((new ClienteDTO("Bruno", 100.0, codigo)));
+    }
+
+    public static Transferencia geraTransferencia(){
+        return new Transferencia(geraConta(2L), geraConta(3L), 10.0, ResultadoTransferenciaEnum.SUCESSO.getResultado());
     }
 
     public static Transferencia geraTransferencia(Conta contaOrigem, Conta contaDestino, String resultado){
@@ -30,6 +35,9 @@ public class GeradoraDeEntdades {
     }
 
     public static ClienteDTO geraClienteDTO(){
-        return new ClienteDTO("Bruno", 1000.0, 9L);
+        return new ClienteDTO("Bruno", 1000.0, 1L);
+    }
+    public static ClienteDTO geraClienteDTO(String nome, Double saldo){
+        return new ClienteDTO(nome, saldo, 1L);
     }
 }

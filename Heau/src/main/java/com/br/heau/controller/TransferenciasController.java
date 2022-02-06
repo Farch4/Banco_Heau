@@ -47,7 +47,11 @@ public class TransferenciasController {
     @RequestMapping(method = RequestMethod.GET, value = "/listarTransferencias")
     @ResponseBody
     public ResponseEntity<List<TransferenciaDTO>> listaTransferencias(@RequestParam Long numeroConta) {
-        return ResponseEntity.ok(transferenciasService.listaTransferenciasPorConta(numeroConta));
+        List<TransferenciaDTO> lista = transferenciasService.listaTransferenciasPorConta(numeroConta);
+        if(lista.size()>0){
+            return ResponseEntity.ok(lista);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
 }
