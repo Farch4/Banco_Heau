@@ -4,14 +4,13 @@ import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.Transferencia;
 import com.br.heau.model.dto.ClienteDTO;
-import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 
 import java.util.Date;
 
-public class EntityFactory {
+public class GeradoraDeEntdades {
 
     public static Cliente geraCliente(Long codigo){
-        return new Cliente((new ClienteDTO("Bruno", 1000.0, codigo)));
+        return new Cliente((new ClienteDTO("Bruno", 100.0, codigo)));
     }
 
     public static Transferencia geraTransferencia(Conta contaOrigem, Conta contaDestino, String resultado){

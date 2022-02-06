@@ -39,7 +39,7 @@ public class TransferenciasService {
         Optional<Cliente> clienteDestino = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaDestino());
         Optional<Cliente> clienteOrigem = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaOrigem());
         Conta contaDestino= clienteDestino.isPresent()?clienteDestino.get().getConta() : null;
-        Conta contaOrigem= clienteDestino.isPresent()?clienteOrigem.get().getConta() : null;
+        Conta contaOrigem= clienteOrigem.isPresent()?clienteOrigem.get().getConta() : null;
 
         try {
             validador.validate();

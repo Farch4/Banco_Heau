@@ -15,16 +15,10 @@ public class ClienteValidator {
     }
 
     private Boolean validaNome() throws DominioException {
-        if(clienteDTO.getNome().trim().length()==0 || clienteDTO.getNome().isEmpty()){
+        if(clienteDTO.getNome().trim().length()==0 || clienteDTO.getNome().isEmpty() || clienteDTO.getNome().matches(".*\\d.*")){
             throw new DominioException(Constantes.USUARIO_CADASTRO_USUARIO_INVALIDO);
         }
-        try{
-            Long.parseLong(clienteDTO.getNome());
-            Double.parseDouble(clienteDTO.getNome());
-            throw new DominioException(Constantes.USUARIO_CADASTRO_USUARIO_INVALIDO);
-        }catch (NumberFormatException n){
-            return validaSaldo();
-        }
+        return validaSaldo();
     }
 
     private Boolean validaSaldo() throws DominioException {
