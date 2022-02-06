@@ -31,7 +31,7 @@ public class ClienteController {
     /**
      * Cadastra novo cliente
      * @param cliente
-     * @return
+     * @return status code e mensagem
      */
     @RequestMapping(method = RequestMethod.POST, value = "/cadastro")
     @ResponseBody
@@ -60,7 +60,7 @@ public class ClienteController {
     /**
      * retorna um cliente pelo seu número da conta
      * @param numeroConta
-     * @return Cliente
+     * @return status code e cliente segundo a conta
      */
     @RequestMapping(method = RequestMethod.GET, value= "/buscaPelaConta")
     public ResponseEntity<Optional<Cliente>> buscaPelaConta(@RequestParam Long numeroConta){

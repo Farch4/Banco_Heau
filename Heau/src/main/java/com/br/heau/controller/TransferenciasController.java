@@ -22,14 +22,14 @@ public class TransferenciasController {
     private final TransferenciasService transferenciasService;
 
     @Autowired
-    public TransferenciasController(TransferenciasService transferenciasService, TransferenciasService transferenciasService1) {
+    public TransferenciasController(TransferenciasService transferenciasService) {
         this.transferenciasService = transferenciasService;
     }
 
     /**
      * Cadastra novo cliente
      * @param transferenciaDTO
-     * @return
+     * @return status code e resultado da transferencia
      */
     @RequestMapping(method = RequestMethod.POST, value = "/realizarTransferencia")
     @ResponseBody
@@ -41,6 +41,12 @@ public class TransferenciasController {
         }
 
     }
+
+    /**
+     *
+     * @param numeroConta
+     * @return status code e lista de transfeerncias por conta
+     */
 
     @RequestMapping(method = RequestMethod.GET, value = "/listarTransferencias")
     @ResponseBody
