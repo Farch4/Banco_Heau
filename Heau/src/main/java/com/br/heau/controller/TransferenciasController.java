@@ -1,9 +1,7 @@
 package com.br.heau.controller;
 
 import com.br.heau.model.dto.TransferenciaDTO;
-import com.br.heau.service.ClienteService;
 import com.br.heau.service.TransferenciasService;
-import com.br.heau.model.Transferencia;
 import com.br.heau.util.excecao.DominioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

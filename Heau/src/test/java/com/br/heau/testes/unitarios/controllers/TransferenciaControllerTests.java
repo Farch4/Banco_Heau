@@ -1,13 +1,9 @@
 package com.br.heau.testes.unitarios.controllers;
 
-import com.br.heau.controller.ClienteController;
 import com.br.heau.controller.TransferenciasController;
-import com.br.heau.model.dto.ClienteDTO;
 import com.br.heau.model.dto.TransferenciaDTO;
 import com.br.heau.model.enums.ResultadoTransferenciaEnum;
-import com.br.heau.service.ClienteService;
 import com.br.heau.service.TransferenciasService;
-import com.br.heau.util.Constantes;
 import com.br.heau.util.excecao.DominioException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,12 +14,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static com.br.heau.testes.utils.GeradoraDeEntidades.geraCliente;
-import static com.br.heau.testes.utils.GeradoraDeEntidades.geraClienteDTO;
 import static com.br.heau.testes.utils.GeradoraDeEntidades.geraTransferencia;
-import static com.br.heau.util.GeradoraDeMensagens.mensagemSucessoCadastroCliente;
 import static com.br.heau.util.GeradoraDeMensagens.mensagemSucessoTransferencia;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;

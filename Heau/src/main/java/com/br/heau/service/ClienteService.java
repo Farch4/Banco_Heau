@@ -3,7 +3,6 @@ package com.br.heau.service;
 import com.br.heau.data.IRepositorioClientes;
 import com.br.heau.model.Cliente;
 import com.br.heau.model.dto.ClienteDTO;
-import com.br.heau.util.Constantes;
 import com.br.heau.util.excecao.DominioException;
 import com.br.heau.util.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
