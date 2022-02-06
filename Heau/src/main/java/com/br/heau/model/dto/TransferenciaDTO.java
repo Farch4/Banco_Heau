@@ -15,7 +15,7 @@ import java.util.Date;
 public class TransferenciaDTO {
 
     /**
-     * Construtor que converte de antidade pra DTO
+     * Construtor que converte de entidade pra DTO
      * @param transferencia
      */
     public TransferenciaDTO(Transferencia transferencia){

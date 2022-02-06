@@ -3,17 +3,21 @@ package com.br.heau.service;
 import com.br.heau.data.IRepositorioTransferencias;
 import com.br.heau.data.IRepositorioClientes;
 import com.br.heau.data.IRepositorioConta;
+import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.Transferencia;
 import com.br.heau.model.dto.TransferenciaDTO;
 import com.br.heau.model.enums.ResultadoTransferenciaEnum;
+import com.br.heau.util.excecao.DominioException;
 import com.br.heau.util.validator.TransferenciaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static com.br.heau.util.GeradoraDeMensagens.mensagemSucessoTransferencia;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransferenciasService {
@@ -29,27 +33,34 @@ public class TransferenciasService {
         this.repositorioTransferencias = repositorioTransferencias;
     }
 
-    public Transferencia realizaTransferencia(TransferenciaDTO transferenciaDTO){
-
+    public String realizaTransferencia(TransferenciaDTO transferenciaDTO) throws DominioException {
         TransferenciaValidator validador = new TransferenciaValidator(repositorioCliente, transferenciaDTO);
 
-        if(validador.validate()!=null){
-            return repositorioTransferencias.save(validador.validate());
+        Optional<Cliente> clienteDestino = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaDestino());
+        Optional<Cliente> clienteOrigem = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaOrigem());
+        Conta contaDestino= clienteDestino.isPresent()?clienteDestino.get().getConta() : null;
+        Conta contaOrigem= clienteDestino.isPresent()?clienteOrigem.get().getConta() : null;
+
+        try {
+            validador.validate();
+
+            contaOrigem.setSaldo(contaOrigem.getSaldo() - transferenciaDTO.getValorTransferencia());
+            repositorioConta.save(contaOrigem);
+            contaDestino.setSaldo(contaDestino.getSaldo() + transferenciaDTO.getValorTransferencia());
+            repositorioConta.save(contaDestino);
+
+            repositorioTransferencias.save(new Transferencia(contaOrigem, contaDestino,
+                    transferenciaDTO.getValorTransferencia(), ResultadoTransferenciaEnum.SUCESSO.getResultado()));
+
+            return mensagemSucessoTransferencia(clienteOrigem.get().getNome(), clienteDestino.get().getNome(),
+                    transferenciaDTO.getValorTransferencia().toString());
+
+        }catch (DominioException e){
+            repositorioTransferencias.save(new Transferencia(contaOrigem,
+                    contaDestino, transferenciaDTO.getValorTransferencia(),
+                    e.getMensagensDeErro()));
+            throw e;
         }
-
-        Conta contaDestino = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaDestino())
-                .get().getConta();
-        Conta contaOrigem = repositorioCliente.findByContaId(transferenciaDTO.getNumeroContaOrigem())
-                .get().getConta();
-
-        contaOrigem.setSaldo(contaOrigem.getSaldo()- transferenciaDTO.getValorTransferencia());
-        repositorioConta.save(contaOrigem);
-        contaDestino.setSaldo(contaDestino.getSaldo()+transferenciaDTO.getValorTransferencia());
-        repositorioConta.save(contaDestino);
-
-        return repositorioTransferencias.save(new Transferencia( contaOrigem, contaDestino,
-                transferenciaDTO.getValorTransferencia(), ResultadoTransferenciaEnum.SUCESSO.getResultado()));
-
     }
 
 
