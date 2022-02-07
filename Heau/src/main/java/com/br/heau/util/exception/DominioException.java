@@ -1,4 +1,4 @@
-package com.br.heau.util.excecao;
+package com.br.heau.util.exception;
 
 public class DominioException extends Exception{
     private String mensagensDeErro;

@@ -4,8 +4,8 @@ import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.dto.TransferenciaDTO;
 import com.br.heau.model.enums.ResultadoTransferenciaEnum;
-import com.br.heau.data.IRepositorioClientes;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.repository.IRepositorioClientes;
+import com.br.heau.util.exception.DominioException;
 import lombok.AllArgsConstructor;
 
 import java.util.Optional;

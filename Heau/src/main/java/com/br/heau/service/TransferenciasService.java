@@ -1,14 +1,14 @@
 package com.br.heau.service;
 
-import com.br.heau.data.IRepositorioTransferencias;
-import com.br.heau.data.IRepositorioClientes;
-import com.br.heau.data.IRepositorioConta;
+import com.br.heau.repository.IRepositorioTransferencias;
+import com.br.heau.repository.IRepositorioClientes;
+import com.br.heau.repository.IRepositorioConta;
 import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.Transferencia;
 import com.br.heau.model.dto.TransferenciaDTO;
 import com.br.heau.model.enums.ResultadoTransferenciaEnum;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.util.exception.DominioException;
 import com.br.heau.util.validator.TransferenciaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

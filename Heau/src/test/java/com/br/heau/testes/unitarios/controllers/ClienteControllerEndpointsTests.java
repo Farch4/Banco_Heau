@@ -3,8 +3,9 @@ package com.br.heau.testes.unitarios.controllers;
 import com.br.heau.controller.ClienteController;
 import com.br.heau.model.dto.ClienteDTO;
 import com.br.heau.service.ClienteService;
+import com.br.heau.testes.ITestCasesClientes;
 import com.br.heau.util.Constantes;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.util.exception.DominioException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-public class ClienteControllerEndpointsTests {
+public class ClienteControllerEndpointsTests implements ITestCasesClientes {
 
     @Mock
     ClienteService clienteService;
@@ -33,7 +34,7 @@ public class ClienteControllerEndpointsTests {
     ClienteController clienteController;
 
     @Test
-    public void deveriaTerSucessoAoCadastrarUsuario() throws DominioException {
+    public void deveriaTerSucessoAoCadastrarCliente() throws DominioException {
         ClienteDTO cliente = geraClienteDTO();
         when(clienteService.cadastroCliente(cliente)).
                 thenReturn(mensagemSucessoCadastroCliente(cliente.getNome(),
@@ -46,7 +47,7 @@ public class ClienteControllerEndpointsTests {
     }
 
     @Test
-    public void deveriaFalharAoCadastrarUsuarioComNomeInvalido() throws DominioException {
+    public void deveriaFalharAoCadastrarClienteComNomeInvalido() throws DominioException {
         ClienteDTO cliente = geraClienteDTO("3bruno", 2.0);
         when(clienteService.cadastroCliente(cliente)).
                 thenThrow(new DominioException(Constantes.USUARIO_CADASTRO_USUARIO_INVALIDO));
@@ -58,7 +59,7 @@ public class ClienteControllerEndpointsTests {
     }
 
     @Test
-    public void deveriaFalharAoCadastrarUsuarioComNomeVazio() throws DominioException {
+    public void deveriaFalharAoCadastrarClienteComNomeVazio() throws DominioException {
         ClienteDTO cliente = geraClienteDTO("",200.0);
         when(clienteService.cadastroCliente(cliente)).
                 thenThrow(new DominioException(Constantes.USUARIO_CADASTRO_USUARIO_INVALIDO));
@@ -70,8 +71,8 @@ public class ClienteControllerEndpointsTests {
     }
 
     @Test
-    public void deveriaFalharAoCadastrarUsuarioComSaldoMenorQueZero() throws DominioException {
-        ClienteDTO cliente = geraClienteDTO("3bruno", -9.0);
+    public void deveriaFalharAoCadastrarClienteComSaldoMenorQueZero() throws DominioException {
+        ClienteDTO cliente = geraClienteDTO("Bruno", -9.0);
         when(clienteService.cadastroCliente(cliente)).
                 thenThrow(new DominioException(Constantes.SALDO_INVALIDO));
 
@@ -110,7 +111,7 @@ public class ClienteControllerEndpointsTests {
     }
 
     @Test
-    public void deveriaTerSucessoAoBuscarUsuarioPorConta(){
+    public void deveriaTerSucessoAoBuscarClientePorConta(){
 
         when(clienteService.buscaPelaConta(1L)).
                 thenReturn(Optional.of(geraCliente(1L)));
@@ -121,7 +122,7 @@ public class ClienteControllerEndpointsTests {
     }
 
     @Test
-    public void deveriaNaoEncontrarUsuarioPorConta(){
+    public void deveriaNaoEncontrarClientePorConta(){
 
         when(clienteService.buscaPelaConta(1L)).
                 thenReturn(Optional.empty());

@@ -1,11 +1,12 @@
 package com.br.heau.testes.unitarios.servicos;
 
-import com.br.heau.data.IRepositorioClientes;
+import com.br.heau.repository.IRepositorioClientes;
 import com.br.heau.model.Cliente;
 import com.br.heau.model.dto.ClienteDTO;
 import com.br.heau.service.ClienteService;
+import com.br.heau.testes.ITestCasesClientes;
 import com.br.heau.util.Constantes;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.util.exception.DominioException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,7 +24,7 @@ import static org.mockito.BDDMockito.given;
 import static com.br.heau.util.GeradoraDeMensagens.mensagemSucessoCadastroCliente;
 
 @SpringBootTest
-public class ClienteServiceMetodosTests {
+public class ClienteServiceMetodosTests implements ITestCasesClientes {
 
     @Mock
     IRepositorioClientes repositorioClientes;
@@ -32,7 +33,7 @@ public class ClienteServiceMetodosTests {
     ClienteService clienteService;
 
     @Test
-    public void testeDeveriaSucessoCadastroCliente() throws DominioException {
+    public void deveriaTerSucessoAoCadastrarCliente() throws DominioException {
         String nome = "Bruno";
         Long conta = 1L;
         given(repositorioClientes.save(geraCliente(1L))).willReturn(geraCliente(1L));
@@ -40,7 +41,7 @@ public class ClienteServiceMetodosTests {
     }
 
     @Test
-    public void testeDeveApresentarErroDeNomeInvalidoParaNomeVazio(){
+    public void deveriaFalharAoCadastrarClienteComNomeVazio(){
         String nome = "";
         Long conta = 1L;
         DominioException exception = assertThrows(DominioException.class, ()->clienteService.cadastroCliente(new ClienteDTO(nome, 5000.0, conta)));
@@ -48,7 +49,7 @@ public class ClienteServiceMetodosTests {
     }
 
     @Test
-    public void testeDeveApresentarErroDeNomeInvalidoParaNomeComNumero(){
+    public void deveriaFalharAoCadastrarClienteComNomeInvalido(){
         String nome = "8Deivid";
         Long conta = 1L;
         DominioException exception = assertThrows(DominioException.class, ()->clienteService.cadastroCliente(new ClienteDTO(nome, 5000.0, conta)));
@@ -56,7 +57,7 @@ public class ClienteServiceMetodosTests {
     }
 
     @Test
-    public void testeDeveApresentarErroDeSaldoMenorQueZero(){
+    public void deveriaFalharAoCadastrarClienteComSaldoMenorQueZero(){
         String nome = "Sergio";
         Long conta = 1L;
         DominioException exception = assertThrows(DominioException.class, ()->clienteService.cadastroCliente(new ClienteDTO(nome, -2.0, conta)));
@@ -64,7 +65,7 @@ public class ClienteServiceMetodosTests {
     }
 
     @Test
-    public void testeDeveTerSucessoAoListarClientes(){
+    public void deveriaTerSucessoAoListarClientes(){
         List<Cliente> listaMock = new ArrayList<>();
         listaMock.add(geraCliente(1L));
         listaMock.add(geraCliente(2L));
@@ -73,20 +74,20 @@ public class ClienteServiceMetodosTests {
     }
 
     @Test
-    public void testeDeveRetornarListaVazia(){
+    public void deveriaRetornarListaVazia(){
         given(repositorioClientes.findAll()).willReturn(null);
         assertNull(clienteService.ListaClientes());
     }
 
     @Test
-    public void testeDeveTerSucessoEmPesquisarUsuarioPelaConta(){
+    public void deveriaTerSucessoAoBuscarClientePorConta(){
         Optional<Cliente> clienteResposta = Optional.of(geraCliente(1L));
         given(repositorioClientes.findByContaId(1L)).willReturn(clienteResposta);
         assertEquals(clienteService.buscaPelaConta(1L).get().getConta().getId(), 1L);
     }
 
     @Test
-    public void testeDeveTrazeResultadoVazio(){
+    public void deveriaNaoEncontrarClientePorConta(){
         given(repositorioClientes.findByContaId(1L)).willReturn(null);
         assertNull(clienteService.buscaPelaConta(1L));
     }

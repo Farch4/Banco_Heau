@@ -1,7 +1,7 @@
 package com.br.heau.util.validator;
 import com.br.heau.model.dto.ClienteDTO;
 import com.br.heau.util.Constantes;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.util.exception.DominioException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

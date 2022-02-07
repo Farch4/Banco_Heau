@@ -1,15 +1,16 @@
 package com.br.heau.testes.unitarios.servicos;
 
-import com.br.heau.data.IRepositorioClientes;
-import com.br.heau.data.IRepositorioConta;
-import com.br.heau.data.IRepositorioTransferencias;
+import com.br.heau.repository.IRepositorioClientes;
+import com.br.heau.repository.IRepositorioConta;
+import com.br.heau.repository.IRepositorioTransferencias;
 import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.Transferencia;
 import com.br.heau.model.dto.TransferenciaDTO;
 import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 import com.br.heau.service.TransferenciasService;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.testes.ITestCasesTransferencias;
+import com.br.heau.util.exception.DominioException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,7 +30,7 @@ import static com.br.heau.util.GeradoraDeMensagens.mensagemSucessoTransferencia;
 
 
 @SpringBootTest
-public class TransferenciaMetodosServiceTests {
+public class TransferenciaMetodosServiceTests implements ITestCasesTransferencias {
 
     @Mock
     IRepositorioClientes repositorioClientes;
@@ -45,7 +46,7 @@ public class TransferenciaMetodosServiceTests {
 
 
     @Test
-    public void testeDeveriaSucessoAoRealizarTransferencia() throws DominioException {
+    public void deveriaSucessoAoRealizarTransferencia() throws DominioException {
 
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
@@ -62,7 +63,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaDarErroDeValorMaiorQueMilAoRealizarTransferencia(){
+    public void deveriaDarErroDeValorMaiorQueMilAoRealizarTransferencia(){
 
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
@@ -83,7 +84,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaDarErroDeContaOrigemInexistenteAoRealizarTransferencia(){
+    public void deveriaDarErroDeContaOrigemInexistenteAoRealizarTransferencia(){
 
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
@@ -104,7 +105,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaDarErroDeContaDestinoInexistenteAoRealizarTransferencia(){
+    public void deveriaDarErroDeContaDestinoInexistenteAoRealizarTransferencia(){
 
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
@@ -125,7 +126,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaDarErroDeContasInexistentesAoRealizarTransferencia(){
+    public void deveriaDarErroDeContasInexistentesAoRealizarTransferencia(){
 
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
@@ -146,7 +147,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaDarErroComValorMenorQueZero() {
+    public void deveriaDarErroComValorMenorQueZero() {
 
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
@@ -166,7 +167,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaDarErroDeSaldoInsuficiente() {
+    public void deveriaDarErroDeSaldoInsuficiente() {
 
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
@@ -186,7 +187,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaSucessoAoListarTransferenciasPorConta(){
+    public void deveriaSucessoAoListarTransferenciasPorConta(){
 
         Conta contaOrigem= geraConta(2L);
         Conta contaDestino = geraConta(1L);
@@ -208,7 +209,7 @@ public class TransferenciaMetodosServiceTests {
     }
 
     @Test
-    public void testeDeveriaTrazerResultadoVazioAoAcessarTransferenciasPorConta(){
+    public void deveriaTrazerResultadoVazioAoAcessarTransferenciasPorConta(){
 
         List listaVazia = new ArrayList<>();
         given(repositorioTransferencias.findByContaOrigemId(2L)).willReturn(listaVazia);

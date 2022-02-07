@@ -3,7 +3,7 @@ package com.br.heau.controller;
 import com.br.heau.model.Cliente;
 import com.br.heau.service.ClienteService;
 import com.br.heau.model.dto.ClienteDTO;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.util.exception.DominioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

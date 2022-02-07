@@ -4,7 +4,8 @@ import com.br.heau.controller.TransferenciasController;
 import com.br.heau.model.dto.TransferenciaDTO;
 import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 import com.br.heau.service.TransferenciasService;
-import com.br.heau.util.excecao.DominioException;
+import com.br.heau.testes.ITestCasesTransferencias;
+import com.br.heau.util.exception.DominioException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class TransferenciaControllerTests {
+public class TransferenciaControllerTests implements ITestCasesTransferencias {
 
     @Mock
     TransferenciasService transferenciasService;
@@ -30,7 +31,7 @@ public class TransferenciaControllerTests {
     TransferenciasController transferenciasController;
 
     @Test
-    public void testeDeveriaSucessoAoRealizarTransferencia() throws DominioException {
+    public void deveriaSucessoAoRealizarTransferencia() throws DominioException {
         String contaOrigem = "2";
         String contaDestino = "3";
         String valor = "20";
@@ -44,7 +45,7 @@ public class TransferenciaControllerTests {
     }
 
     @Test
-    public void testeDeveriaFalharAoRealizarTransferenciaPorValorNegativo() throws DominioException {
+    public void deveriaDarErroComValorMenorQueZero() throws DominioException {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
@@ -55,7 +56,7 @@ public class TransferenciaControllerTests {
     }
 
     @Test
-    public void testeDeveriaFalharAoRealizarTransferenciaPorSaldoInsufuciente() throws DominioException {
+    public void deveriaDarErroDeSaldoInsuficiente() throws DominioException {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
@@ -66,7 +67,7 @@ public class TransferenciaControllerTests {
     }
 
     @Test
-    public void testeDeveriaFalharAoRealizarTransferenciaPorValorMaiorQueMil() throws DominioException {
+    public void deveriaDarErroDeValorMaiorQueMilAoRealizarTransferencia() throws DominioException {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
@@ -76,7 +77,7 @@ public class TransferenciaControllerTests {
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
     @Test
-    public void testeDeveriaFalharAoRealizarTransferenciaPorContaOrigemInexistente() throws DominioException {
+    public void deveriaDarErroDeContaOrigemInexistenteAoRealizarTransferencia() throws DominioException {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
@@ -85,8 +86,21 @@ public class TransferenciaControllerTests {
         assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.CONTA_ORIGEM_INEXISTENTE.getResultado()),
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
+
     @Test
-    public void testeDeveriaFalharAoRealizarTransferenciaPorContaDestinoInexistente() throws DominioException {
+    public void deveriaDarErroDeContasInexistentesAoRealizarTransferencia() throws DominioException{
+        TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
+
+        when(transferenciasService.realizaTransferencia(transferenciaDTO))
+                .thenThrow(new DominioException(ResultadoTransferenciaEnum.CONTAS_INEXISTENTES.getResultado()));
+
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.CONTAS_INEXISTENTES.getResultado()),
+                transferenciasController.realizarTransferencia(transferenciaDTO));
+    }
+
+
+    @Test
+    public void deveriaDarErroDeContaDestinoInexistenteAoRealizarTransferencia() throws DominioException {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
@@ -96,8 +110,9 @@ public class TransferenciaControllerTests {
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
 
+
     @Test
-    public void deveriaTerSucessoAoListarTransferenciasPorConta(){
+    public void deveriaSucessoAoListarTransferenciasPorConta(){
 
         List transferenciasDTO = new ArrayList<>();
         transferenciasDTO.add(new TransferenciaDTO(geraTransferencia()));
@@ -111,7 +126,7 @@ public class TransferenciaControllerTests {
     }
 
     @Test
-    public void deveriaRetornarListaVaziaAoListarTransferenciasPorConta(){
+    public void deveriaTrazerResultadoVazioAoAcessarTransferenciasPorConta(){
 
         when(transferenciasService.listaTransferenciasPorConta(2L))
                 .thenReturn(new ArrayList<>());

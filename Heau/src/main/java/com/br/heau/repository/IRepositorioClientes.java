@@ -1,4 +1,4 @@
-package com.br.heau.data;
+package com.br.heau.repository;
 
 import com.br.heau.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;

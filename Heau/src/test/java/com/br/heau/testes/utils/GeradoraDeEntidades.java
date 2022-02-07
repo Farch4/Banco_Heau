@@ -17,6 +17,9 @@ public class GeradoraDeEntidades {
     public static Transferencia geraTransferencia(){
         return new Transferencia(geraConta(2L), geraConta(3L), 10.0, ResultadoTransferenciaEnum.SUCESSO.getResultado());
     }
+    public static Transferencia geraTransferencia(Double valor){
+        return new Transferencia(geraConta(2L), geraConta(3L), valor, ResultadoTransferenciaEnum.SUCESSO.getResultado());
+    }
 
     public static Transferencia geraTransferencia(Conta contaOrigem, Conta contaDestino, String resultado){
         return new Transferencia(contaOrigem, contaDestino, 10.0, resultado);
@@ -40,4 +43,9 @@ public class GeradoraDeEntidades {
     public static ClienteDTO geraClienteDTO(String nome, Double saldo){
         return new ClienteDTO(nome, saldo, 1L);
     }
+
+    public static ClienteDTO geraClienteDTO(String nome, Double saldo, Long conta){
+        return new ClienteDTO(nome, saldo, conta);
+    }
 }
+
