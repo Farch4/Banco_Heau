@@ -2,30 +2,35 @@ package com.br.heau.util.validator;
 import com.br.heau.model.dto.ClienteDTO;
 import com.br.heau.util.Constantes;
 import com.br.heau.util.exception.DominioException;
-import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@AllArgsConstructor
+@Data
 public class ClienteValidator {
 
-    ClienteDTO clienteDTO;
+    private final ClienteDTO clienteDTO;
+    private String mensagemDeErro;
 
+    public ClienteValidator(ClienteDTO clienteDTO) {
+        this.clienteDTO = clienteDTO;
+        mensagemDeErro="";
+    }
 
-    public Boolean validate() throws DominioException {
+    public String validate() throws DominioException {
         return validaNome();
     }
 
-    private Boolean validaNome() throws DominioException {
+    private String validaNome() throws DominioException {
         if(clienteDTO.getNome().trim().length()==0 || clienteDTO.getNome().isEmpty() || clienteDTO.getNome().matches(".*\\d.*")){
-            throw new DominioException(Constantes.USUARIO_CADASTRO_USUARIO_INVALIDO);
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.USUARIO_CADASTRO_USUARIO_INVALIDO));
         }
         return validaSaldo();
     }
 
-    private Boolean validaSaldo() throws DominioException {
+    private String validaSaldo() throws DominioException {
         if(clienteDTO.getSaldo()<0){
-            throw new DominioException(Constantes.SALDO_INVALIDO);
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.SALDO_INVALIDO));
         }
-        return true;
+        return getMensagemDeErro();
     }
 
 }

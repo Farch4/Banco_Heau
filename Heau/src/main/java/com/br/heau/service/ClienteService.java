@@ -7,6 +7,7 @@ import com.br.heau.util.exception.DominioException;
 import com.br.heau.util.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import static com.br.heau.util.GeradoraDeMensagens.mensagemSucessoCadastroCliente;
 
 import java.util.List;
@@ -24,16 +25,18 @@ public class ClienteService {
 
 
     public String cadastroCliente(ClienteDTO clienteDTO) throws DominioException {
-
         ClienteValidator validador = new ClienteValidator(clienteDTO);
-        try{
-            validador.validate();
-            Cliente cliente = new Cliente(clienteDTO);
-            repositorio.save(cliente);
-            return mensagemSucessoCadastroCliente(cliente.getNome(), cliente.getConta().getId().toString());
-        }catch (DominioException e){
-            throw e;
+        String erros = validador.validate();
+
+        if (!erros.isEmpty()) {
+            throw new DominioException(erros);
         }
+
+        validador.validate();
+        Cliente cliente = new Cliente(clienteDTO);
+        repositorio.save(cliente);
+        return mensagemSucessoCadastroCliente(cliente.getNome(), cliente.getConta().getId().toString());
+
     }
 
     public List<Cliente> ListaClientes() {

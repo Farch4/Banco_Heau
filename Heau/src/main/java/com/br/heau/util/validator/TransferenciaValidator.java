@@ -67,7 +67,7 @@ public class TransferenciaValidator {
         if (transferenciaDTO.getValorTransferencia() < 0) {
             setMensagemDeErro(mensagemDeErro.concat(Constantes.VALOR_INVALIDO));
         }
-        return mensagemDeErro;
+        return getMensagemDeErro();
     }
 
 
