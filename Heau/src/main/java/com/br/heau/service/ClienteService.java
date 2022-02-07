@@ -32,7 +32,6 @@ public class ClienteService {
             throw new DominioException(erros);
         }
 
-        validador.validate();
         Cliente cliente = new Cliente(clienteDTO);
         repositorio.save(cliente);
         return mensagemSucessoCadastroCliente(cliente.getNome(), cliente.getConta().getId().toString());
