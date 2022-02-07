@@ -39,12 +39,19 @@ mvn clean install -DskipTests
 ```
 Isto irá gerar o executável (.jar) da aplicação, dentro da pasta target, provavelmente com o nome "heau-0.0.1-SNAPSHOT.jar".
 
+## Testes automatizados
+Para rodar os testes, acesse o diretório no diretório Banco_Heau/Heau, abra o cmd e execute o comando:
+```
+mvn test
+```
+ou, apartir da IDE de sua preferência.
+
 ## Como utilizar dos Endpoints
-obs: será rodada, por padrão, na porta 8081, segundo o que está configurado no application.properties
+obs: será rodada, por padrão, na porta 8081, segundo o que está configurado no application.properties. Não é necessário nenhum tipo de autenticação para o uso dos endpoints.
 
 
 ### Para cadastrar novo Cliente
-Acesse http://localhost:8081/heau/v1/clientes/cadastro, configure o método para POST, o tipo para JSON, e envie o corpo no seguinte formato:
+Configure o método para POST, o tipo para JSON, e acesse http://localhost:8081/heau/v1/clientes/cadastro, enviando o corpo no seguinte formato:
 ```
 {
     "Nome do Cliente":"Nome Qualquer",
@@ -53,17 +60,16 @@ Acesse http://localhost:8081/heau/v1/clientes/cadastro, configure o método para
 ```
 
 ### Para ver lista de clientes cadastrados
-acesse http://localhost:8081/heau/v1/clientes/lista
+Configure o método para GET e acesse http://localhost:8081/heau/v1/clientes/lista 
 
 
 ### Para buscar clientes pelo número da conta
-acesse http://localhost:8081/heau/v1/transferencias/listarTransferencias?numeroConta=NUMERO
+Configure o método para GET e acesse http://localhost:8081/heau/v1/clientes/buscaPelaConta?numeroConta=NUMERO
 onde NUMERO representa o número da conta da qual se quer informações do Cliente
 
 
 ### Para realizar transferência
-acesse http://localhost:8081/heau/v1/transferencias/realizarTransferencia e envie o corpo no seguinte formato:
-
+Configure o método para POST, o tipo para JSON, acesse http://localhost:8081/heau/v1/transferencias/realizarTransferencia, e envie o corpo no seguinte formato:
 ```
 {
     "Número da Conta Origem:":1,
@@ -73,7 +79,7 @@ acesse http://localhost:8081/heau/v1/transferencias/realizarTransferencia e envi
 ```
 
 ### Para buscar as transferências relacionadas à uma conta, por ordem de data decrescente:
-acesse http://localhost:8081/heau/v1/transferencias/listarTransferencias?numeroConta=NUMERO
+Configure o método para GET acesse http://localhost:8081/heau/v1/transferencias/listarTransferencias?numeroConta=NUMERO
 onde NUMERO representa o número da conta da qual se quer obter o histórico de transferências.
 
 
