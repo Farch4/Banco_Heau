@@ -1,5 +1,6 @@
 package com.br.heau.testes.unitarios.servicos;
 
+import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 import com.br.heau.repository.IRepositorioClientes;
 import com.br.heau.repository.IRepositorioConta;
 import com.br.heau.repository.IRepositorioTransferencias;
@@ -7,9 +8,9 @@ import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.Transferencia;
 import com.br.heau.model.dto.TransferenciaDTO;
-import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 import com.br.heau.service.TransferenciasService;
 import com.br.heau.testes.ITestCasesTransferencias;
+import com.br.heau.util.Constantes;
 import com.br.heau.util.exception.DominioException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -65,10 +66,10 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
     @Test
     public void deveriaDarErroDeValorMaiorQueMilAoRealizarTransferencia(){
 
-        Cliente clienteOrigem= geraCliente(2L);
+        Cliente clienteOrigem= geraCliente(2L, 2000.0);
         Cliente clienteDestino = geraCliente(1L);
         Transferencia transferencia = geraTransferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
-                ResultadoTransferenciaEnum.VALOR_MAIOR.getResultado(), 1500.0);
+                Constantes.VALOR_MAIOR, 1500.0);
 
         given(repositorioClientes.findByContaId(2L)).willReturn(Optional.of(clienteOrigem));
         given(repositorioClientes.findByContaId(1L)).willReturn(Optional.of(clienteDestino));
@@ -79,7 +80,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         DominioException exception = assertThrows(DominioException.class, ()->
                 transferenciasService.realizaTransferencia(transferenciaDTO));
 
-        assertEquals(ResultadoTransferenciaEnum.VALOR_MAIOR.getResultado(), exception.getMensagensDeErro());
+        assertEquals(Constantes.VALOR_MAIOR, exception.getMensagensDeErro());
 
     }
 
@@ -89,7 +90,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
         Transferencia transferencia = geraTransferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
-                ResultadoTransferenciaEnum.CONTA_ORIGEM_INEXISTENTE.getResultado(), 150.0);
+                Constantes.CONTA_ORIGEM_INEXISTENTE, 150.0);
 
         given(repositorioClientes.findByContaId(2L)).willReturn(Optional.empty());
         given(repositorioClientes.findByContaId(1L)).willReturn(Optional.of(clienteDestino));
@@ -100,7 +101,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         DominioException exception = assertThrows(DominioException.class, ()->
                 transferenciasService.realizaTransferencia(transferenciaDTO));
 
-        assertEquals(ResultadoTransferenciaEnum.CONTA_ORIGEM_INEXISTENTE.getResultado(), exception.getMensagensDeErro());
+        assertEquals(Constantes.CONTA_ORIGEM_INEXISTENTE, exception.getMensagensDeErro());
 
     }
 
@@ -110,7 +111,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
         Transferencia transferencia = geraTransferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
-                ResultadoTransferenciaEnum.CONTA_DESTINO_INEXISTENTE.getResultado(), 150.0);
+                Constantes.CONTA_DESTINO_INEXISTENTE, 100.0);
 
         given(repositorioClientes.findByContaId(2L)).willReturn(Optional.of(clienteOrigem));
         given(repositorioClientes.findByContaId(1L)).willReturn(Optional.empty());
@@ -121,7 +122,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         DominioException exception = assertThrows(DominioException.class, ()->
                 transferenciasService.realizaTransferencia(transferenciaDTO));
 
-        assertEquals(ResultadoTransferenciaEnum.CONTA_DESTINO_INEXISTENTE.getResultado(), exception.getMensagensDeErro());
+        assertEquals(Constantes.CONTA_DESTINO_INEXISTENTE, exception.getMensagensDeErro());
 
     }
 
@@ -131,7 +132,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
         Transferencia transferencia = geraTransferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
-                ResultadoTransferenciaEnum.CONTAS_INEXISTENTES.getResultado(), 150.0);
+                Constantes.CONTAS_INEXISTENTES, 150.0);
 
         given(repositorioClientes.findByContaId(2L)).willReturn(Optional.empty());
         given(repositorioClientes.findByContaId(1L)).willReturn(Optional.empty());
@@ -142,7 +143,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         DominioException exception = assertThrows(DominioException.class, ()->
                 transferenciasService.realizaTransferencia(transferenciaDTO));
 
-        assertEquals(ResultadoTransferenciaEnum.CONTAS_INEXISTENTES.getResultado(), exception.getMensagensDeErro());
+        assertEquals(Constantes.CONTAS_INEXISTENTES, exception.getMensagensDeErro());
 
     }
 
@@ -162,7 +163,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         DominioException exception = assertThrows(DominioException.class, ()->
                 transferenciasService.realizaTransferencia(transferenciaDTO));
 
-        assertEquals(ResultadoTransferenciaEnum.VALOR_INVALIDO.getResultado(), exception.getMensagensDeErro());
+        assertEquals(Constantes.VALOR_INVALIDO, exception.getMensagensDeErro());
 
     }
 
@@ -172,7 +173,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         Cliente clienteOrigem= geraCliente(2L);
         Cliente clienteDestino = geraCliente(1L);
         Transferencia transferencia = geraTransferencia(clienteOrigem.getConta(), clienteDestino.getConta(),
-                ResultadoTransferenciaEnum.SALDO_INCUFICIENTE.getResultado(), 300.0);
+                Constantes.SALDO_INCUFICIENTE, 300.0);
 
         given(repositorioClientes.findByContaId(2L)).willReturn(Optional.of(clienteOrigem));
         given(repositorioClientes.findByContaId(1L)).willReturn(Optional.of(clienteDestino));
@@ -182,7 +183,7 @@ public class TransferenciaMetodosServiceTests implements ITestCasesTransferencia
         DominioException exception = assertThrows(DominioException.class, ()->
                 transferenciasService.realizaTransferencia(transferenciaDTO));
 
-        assertEquals(ResultadoTransferenciaEnum.SALDO_INCUFICIENTE.getResultado(), exception.getMensagensDeErro());
+        assertEquals(Constantes.SALDO_INCUFICIENTE, exception.getMensagensDeErro());
 
     }
 

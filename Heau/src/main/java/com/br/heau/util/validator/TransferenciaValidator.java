@@ -3,56 +3,71 @@ package com.br.heau.util.validator;
 import com.br.heau.model.Cliente;
 import com.br.heau.model.Conta;
 import com.br.heau.model.dto.TransferenciaDTO;
-import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 import com.br.heau.repository.IRepositorioClientes;
+import com.br.heau.util.Constantes;
 import com.br.heau.util.exception.DominioException;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.Optional;
 
+@Data
 @AllArgsConstructor
 public class TransferenciaValidator {
 
     private final IRepositorioClientes repositorioCliente;
     private final TransferenciaDTO transferenciaDTO;
+    private String mensagemDeErro;
 
+    public TransferenciaValidator(IRepositorioClientes repositorioCliente, TransferenciaDTO transferenciaDTO) {
+        this.repositorioCliente = repositorioCliente;
+        this.transferenciaDTO = transferenciaDTO;
+        this.mensagemDeErro = "";
+    }
 
-    public Boolean validate() throws DominioException {
+    public String validate() throws DominioException {
         return validaContas();
     }
 
-    private Boolean validaContas() throws DominioException {
+    private String validaContas() {
         Optional<Cliente> clienteDestino = repositorioCliente.findByContaId(
                 transferenciaDTO.getNumeroContaDestino());
         Optional<Cliente> clienteOrigem = repositorioCliente.findByContaId(
                 transferenciaDTO.getNumeroContaOrigem());
 
-        if(!(clienteOrigem.isPresent()) && (clienteDestino.isPresent())){
-            throw new DominioException(ResultadoTransferenciaEnum.CONTA_ORIGEM_INEXISTENTE.getResultado());
-        }
-        if(!(clienteDestino.isPresent())&&(clienteOrigem.isPresent())){
-            throw new DominioException(ResultadoTransferenciaEnum.CONTA_DESTINO_INEXISTENTE.getResultado());
-        }
-        if(!(clienteDestino.isPresent()) && !(clienteOrigem.isPresent())){
-            throw new DominioException(ResultadoTransferenciaEnum.CONTAS_INEXISTENTES.getResultado());
+        if (!(clienteDestino.isPresent()) && !(clienteOrigem.isPresent())) {
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.CONTAS_INEXISTENTES));
+            return clienteOrigem.isPresent() ? validaValorSaldo(clienteOrigem.get().getConta()) : validaValorTransferencia();
         }
 
-        return validaValor(clienteOrigem.get().getConta());
+        if (!(clienteOrigem.isPresent()) && (clienteDestino.isPresent())) {
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.CONTA_ORIGEM_INEXISTENTE));
+
+        }
+        if (!(clienteDestino.isPresent()) && (clienteOrigem.isPresent())) {
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.CONTA_DESTINO_INEXISTENTE));
+        }
+
+        return clienteOrigem.isPresent() ? validaValorSaldo(clienteOrigem.get().getConta()) : validaValorTransferencia();
 
     }
 
-    private Boolean validaValor(Conta contaOrigem) throws DominioException {
-        if (transferenciaDTO.getValorTransferencia() > 1000) {
-            throw new DominioException(ResultadoTransferenciaEnum.VALOR_MAIOR.getResultado());
-        }
+    private String validaValorSaldo(Conta contaOrigem) {
         if (transferenciaDTO.getValorTransferencia() > contaOrigem.getSaldo()) {
-            throw new DominioException(ResultadoTransferenciaEnum.SALDO_INCUFICIENTE.getResultado());
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.SALDO_INCUFICIENTE));
+        }
+        return validaValorTransferencia();
+    }
+
+
+    private String validaValorTransferencia() {
+        if (transferenciaDTO.getValorTransferencia() > 1000) {
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.VALOR_MAIOR));
         }
         if (transferenciaDTO.getValorTransferencia() < 0) {
-            throw new DominioException(ResultadoTransferenciaEnum.VALOR_INVALIDO.getResultado());
+            setMensagemDeErro(mensagemDeErro.concat(Constantes.VALOR_INVALIDO));
         }
-
-        return true;
+        return mensagemDeErro;
     }
 
 

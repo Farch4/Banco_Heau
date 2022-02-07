@@ -2,9 +2,9 @@ package com.br.heau.testes.unitarios.controllers;
 
 import com.br.heau.controller.TransferenciasController;
 import com.br.heau.model.dto.TransferenciaDTO;
-import com.br.heau.model.enums.ResultadoTransferenciaEnum;
 import com.br.heau.service.TransferenciasService;
 import com.br.heau.testes.ITestCasesTransferencias;
+import com.br.heau.util.Constantes;
 import com.br.heau.util.exception.DominioException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -49,9 +49,9 @@ public class TransferenciaControllerTests implements ITestCasesTransferencias {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
-                .thenThrow(new DominioException(ResultadoTransferenciaEnum.VALOR_INVALIDO.getResultado()));
+                .thenThrow(new DominioException(Constantes.VALOR_INVALIDO));
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.VALOR_INVALIDO.getResultado()),
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constantes.VALOR_INVALIDO),
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
 
@@ -60,9 +60,9 @@ public class TransferenciaControllerTests implements ITestCasesTransferencias {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
-                .thenThrow(new DominioException(ResultadoTransferenciaEnum.SALDO_INCUFICIENTE.getResultado()));
+                .thenThrow(new DominioException(Constantes.SALDO_INCUFICIENTE));
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.SALDO_INCUFICIENTE.getResultado()),
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constantes.SALDO_INCUFICIENTE),
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
 
@@ -71,9 +71,9 @@ public class TransferenciaControllerTests implements ITestCasesTransferencias {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
-                .thenThrow(new DominioException(ResultadoTransferenciaEnum.VALOR_MAIOR.getResultado()));
+                .thenThrow(new DominioException(Constantes.VALOR_MAIOR));
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.VALOR_MAIOR.getResultado()),
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constantes.VALOR_MAIOR),
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
     @Test
@@ -81,9 +81,9 @@ public class TransferenciaControllerTests implements ITestCasesTransferencias {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
-                .thenThrow(new DominioException(ResultadoTransferenciaEnum.CONTA_ORIGEM_INEXISTENTE.getResultado()));
+                .thenThrow(new DominioException(Constantes.CONTA_ORIGEM_INEXISTENTE));
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.CONTA_ORIGEM_INEXISTENTE.getResultado()),
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constantes.CONTA_ORIGEM_INEXISTENTE),
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
 
@@ -92,9 +92,9 @@ public class TransferenciaControllerTests implements ITestCasesTransferencias {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
-                .thenThrow(new DominioException(ResultadoTransferenciaEnum.CONTAS_INEXISTENTES.getResultado()));
+                .thenThrow(new DominioException(Constantes.CONTAS_INEXISTENTES));
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.CONTAS_INEXISTENTES.getResultado()),
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constantes.CONTAS_INEXISTENTES),
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
 
@@ -104,9 +104,9 @@ public class TransferenciaControllerTests implements ITestCasesTransferencias {
         TransferenciaDTO transferenciaDTO = new TransferenciaDTO(geraTransferencia());
 
         when(transferenciasService.realizaTransferencia(transferenciaDTO))
-                .thenThrow(new DominioException(ResultadoTransferenciaEnum.CONTA_DESTINO_INEXISTENTE.getResultado()));
+                .thenThrow(new DominioException(Constantes.CONTA_DESTINO_INEXISTENTE));
 
-        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultadoTransferenciaEnum.CONTA_DESTINO_INEXISTENTE.getResultado()),
+        assertEquals(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Constantes.CONTA_DESTINO_INEXISTENTE),
                 transferenciasController.realizarTransferencia(transferenciaDTO));
     }
 

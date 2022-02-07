@@ -13,9 +13,15 @@ public class GeradoraDeEntidades {
     public static Cliente geraCliente(Long codigo){
         return new Cliente((new ClienteDTO("Bruno", 100.0, codigo)));
     }
+    public static Cliente geraCliente(Long codigo, Double saldo){
+        return new Cliente((new ClienteDTO("Bruno", saldo, codigo)));
+    }
 
     public static Transferencia geraTransferencia(){
         return new Transferencia(geraConta(2L), geraConta(3L), 10.0, ResultadoTransferenciaEnum.SUCESSO.getResultado());
+    }
+    public static Transferencia geraTransferencia(Long contaOrigem, Long contaDestino){
+        return new Transferencia(geraConta(contaOrigem), geraConta(contaDestino), 10.0, ResultadoTransferenciaEnum.SUCESSO.getResultado());
     }
     public static Transferencia geraTransferencia(Double valor){
         return new Transferencia(geraConta(2L), geraConta(3L), valor, ResultadoTransferenciaEnum.SUCESSO.getResultado());
