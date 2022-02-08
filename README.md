@@ -16,17 +16,44 @@ Junit
 Postman
 H2
 Spring Data JPA
+Docker
 ```
 
 ## Pré-requisitos
 
 ```
-Postman, Swagger ou afim
-JRE8 ou superior
-
+Postman ou afim
++
+```
+JRE8+ e Maven
+```
+Ou
+```
+Docker e Docker Compose
 ```
 
 ## Instalação
+
+### Instalação com Docker
+
+Clone:
+```
+git clone https://github.com/Farch4/Banco_Heau.git
+```
+Entre no diretório Banco_Heau/Heau, abra o cmd e execute o comando:
+```
+mvn clean install -DskipTests
+```
+Isto irá gerar o build da aplicação para que possamos gerar a imagem Docker a ser utilizada. A seguir, no mesmo diretório:
+```
+docker build -t heau-image .
+```
+e então
+```
+docker-compose up
+````
+
+### Instalação Clássica
 
 Clone:
 ```
@@ -39,12 +66,14 @@ mvn clean install -DskipTests
 ```
 Isto irá gerar o executável (.jar) da aplicação, dentro da pasta target, provavelmente com o nome "heau-0.0.1-SNAPSHOT.jar".
 
+
 ## Testes automatizados
 Para rodar os testes, acesse o diretório no diretório Banco_Heau/Heau, abra o cmd e execute o comando:
 ```
 mvn test
 ```
-ou, apartir da IDE de sua preferência.
+ou, a partir da IDE de sua preferência.
+
 
 ## Como utilizar dos Endpoints
 obs: será rodada, por padrão, na porta 8081, segundo o que está configurado no application.properties. Não é necessário nenhum tipo de autenticação para o uso dos endpoints.
