@@ -23,6 +23,7 @@ Docker
 
 ```
 Postman ou afim
+```
 +
 ```
 JRE8+ e Maven
