@@ -21,17 +21,10 @@ Docker
 
 ## Pré-requisitos
 
-```
-Postman ou afim
-```
-+
-```
-JRE8+ e Maven
-```
+- Postman ou afim para visualização dos endpoints
+- JRE8+ e Maven para rodar o projeto e executável normalmente
 Ou
-```
-Docker e Docker Compose
-```
+- Docker e Docker Compose para executar com Docker
 
 ## Instalação
 
@@ -95,7 +88,7 @@ Configure o método para GET e acesse http://localhost:8081/heau/v1/clientes/lis
 
 ### Para buscar clientes pelo número da conta
 Configure o método para GET e acesse http://localhost:8081/heau/v1/clientes/buscaPelaConta?numeroConta=NUMERO
-onde NUMERO representa o número da conta da qual se quer informações do Cliente
+onde NUMERO deve ser substituído pelo número da conta da qual se quer informações do Cliente
 
 
 ### Para realizar transferência
@@ -110,6 +103,6 @@ Configure o método para POST, o tipo para JSON, acesse http://localhost:8081/he
 
 ### Para buscar as transferências relacionadas à uma conta, por ordem de data decrescente:
 Configure o método para GET acesse http://localhost:8081/heau/v1/transferencias/listarTransferencias?numeroConta=NUMERO
-onde NUMERO representa o número da conta da qual se quer obter o histórico de transferências.
+onde NUMERO deve ser substituído pelo número da conta da qual se quer obter o histórico de transferências.
 
 
