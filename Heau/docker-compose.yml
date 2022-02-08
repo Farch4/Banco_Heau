@@ -1,0 +1,9 @@
+version: "3.3"
+
+services:
+  heau-image:
+    image: heau-image
+    container_name: heau-image
+    restart: always
+    ports:
+      - 8081:8081
